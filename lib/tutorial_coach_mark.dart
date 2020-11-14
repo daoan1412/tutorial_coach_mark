@@ -91,7 +91,7 @@ class TutorialCoachMark {
 
   void skip(TargetFocus currentTargetFocus) {
     if (onClickSkip != null) onClickSkip(currentTargetFocus);
-    _removeOverlay();
+    next();
   }
 
   void close() {

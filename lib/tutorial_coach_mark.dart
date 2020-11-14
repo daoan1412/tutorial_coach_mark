@@ -13,11 +13,18 @@ class TutorialCoachMark {
   final Function(TargetFocus) onClickTarget;
   final Function() onFinish;
   final double paddingFocus;
-  final Function() onClickSkip;
+  final Function(TargetFocus) onClickSkip;
   final AlignmentGeometry alignSkip;
   final String textSkip;
   final TextStyle textStyleSkip;
   final bool hideSkip;
+
+  final Function() onClickClose;
+  final AlignmentGeometry alignClose;
+  final String textClose;
+  final TextStyle textStyleClose;
+  final bool hideClose;
+
   final Color colorShadow;
   final double opacityShadow;
   final GlobalKey<TutorialCoachMarkWidgetState> _widgetKey = GlobalKey();
@@ -37,6 +44,11 @@ class TutorialCoachMark {
     this.textStyleSkip = const TextStyle(color: Colors.white),
     this.hideSkip = false,
     this.opacityShadow = 0.8,
+    this.onClickClose,
+    this.alignClose = Alignment.bottomLeft,
+    this.textClose = "CLOSE",
+    this.textStyleClose = const TextStyle(color: Colors.white),
+    this.hideClose = false,
   }) : assert(targets != null, opacityShadow >= 0 && opacityShadow <= 1);
 
   OverlayEntry _buildOverlay() {
@@ -51,6 +63,13 @@ class TutorialCoachMark {
         textSkip: textSkip,
         textStyleSkip: textStyleSkip,
         hideSkip: hideSkip,
+
+        clickClose: close,
+        alignClose: alignClose,
+        textClose: textClose,
+        textStyleClose: textStyleClose,
+        hideClose: hideClose,
+
         colorShadow: colorShadow,
         opacityShadow: opacityShadow,
         finish: finish,
@@ -70,12 +89,18 @@ class TutorialCoachMark {
     _removeOverlay();
   }
 
-  void skip() {
-    if (onClickSkip != null) onClickSkip();
+  void skip(TargetFocus currentTargetFocus) {
+    if (onClickSkip != null) onClickSkip(currentTargetFocus);
+    _removeOverlay();
+  }
+
+  void close() {
+    if (onClickClose != null) onClickClose();
     _removeOverlay();
   }
 
   void next() => _widgetKey?.currentState?.next();
+
   void previous() => _widgetKey?.currentState?.previous();
 
   void _removeOverlay() {

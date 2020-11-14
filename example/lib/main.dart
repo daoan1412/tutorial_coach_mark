@@ -65,7 +65,10 @@ class _MyHomePageState extends State<MyHomePage> {
                   key: keyButton,
                   color: Colors.blue,
                   height: 100,
-                  width: MediaQuery.of(context).size.width - 50,
+                  width: MediaQuery
+                      .of(context)
+                      .size
+                      .width - 50,
                   child: Align(
                     alignment: Alignment.center,
                     child: RaisedButton(
@@ -394,18 +397,24 @@ class _MyHomePageState extends State<MyHomePage> {
         colorShadow: Colors.red,
         textSkip: "SKIP",
         paddingFocus: 10,
-        opacityShadow: 0.8, onFinish: () {
-      print("finish");
-    }, onClickTarget: (target) {
-      print(target);
-    }, onClickSkip: () {
-      print("skip");
-    })
+        opacityShadow: 0.8,
+        onFinish: () {
+          print("finish");
+        },
+        onClickTarget: (target) {
+          print(target);
+        },
+        onClickSkip: (target) {
+          print("skip");
+        },
+        onClickClose: () {
+          print("close");
+        })
       ..show();
   }
 
   void _afterLayout(_) {
-    Future.delayed(Duration(milliseconds: 100), () {
+    Future.delayed(Duration(milliseconds: 500), () {
       showTutorial();
     });
   }

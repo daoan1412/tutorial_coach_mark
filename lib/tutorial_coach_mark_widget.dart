@@ -5,6 +5,8 @@ import 'package:tutorial_coach_mark/target_focus.dart';
 import 'package:tutorial_coach_mark/target_position.dart';
 import 'package:tutorial_coach_mark/util.dart';
 
+import 'target_focus.dart';
+
 class TutorialCoachMarkWidget extends StatefulWidget {
   const TutorialCoachMarkWidget({
     Key key,
@@ -19,6 +21,12 @@ class TutorialCoachMarkWidget extends StatefulWidget {
     this.opacityShadow = 0.8,
     this.textStyleSkip = const TextStyle(color: Colors.white),
     this.hideSkip,
+
+    this.clickClose,
+    this.alignClose = Alignment.bottomLeft,
+    this.textClose = "CLOSE",
+    this.textStyleClose = const TextStyle(color: Colors.white),
+    this.hideClose
   }) : super(key: key);
 
   final List<TargetFocus> targets;
@@ -27,11 +35,18 @@ class TutorialCoachMarkWidget extends StatefulWidget {
   final Color colorShadow;
   final double opacityShadow;
   final double paddingFocus;
-  final Function() clickSkip;
+  final Function(TargetFocus) clickSkip;
   final AlignmentGeometry alignSkip;
   final String textSkip;
   final TextStyle textStyleSkip;
   final bool hideSkip;
+
+
+  final Function() clickClose;
+  final AlignmentGeometry alignClose;
+  final String textClose;
+  final TextStyle textStyleClose;
+  final bool hideClose;
 
   @override
   TutorialCoachMarkWidgetState createState() => TutorialCoachMarkWidgetState();
@@ -75,7 +90,8 @@ class TutorialCoachMarkWidgetState extends State<TutorialCoachMarkWidget> {
             duration: Duration(milliseconds: 300),
             child: _buildContents(),
           ),
-          _buildSkip()
+          _buildSkip(),
+          _buildClose()
         ],
       ),
     );
@@ -191,12 +207,37 @@ class TutorialCoachMarkWidgetState extends State<TutorialCoachMarkWidget> {
           opacity: showContent ? 1 : 0,
           duration: Duration(milliseconds: 300),
           child: InkWell(
-            onTap: widget.clickSkip,
+            onTap: widget.clickSkip(currentTarget),
             child: Padding(
               padding: const EdgeInsets.all(20.0),
               child: Text(
                 widget.textSkip,
                 style: widget.textStyleSkip,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildClose() {
+    if (widget.hideClose) {
+      return SizedBox.shrink();
+    }
+    return Align(
+      alignment: widget.alignClose,
+      child: SafeArea(
+        child: AnimatedOpacity(
+          opacity: showContent ? 1 : 0,
+          duration: Duration(milliseconds: 300),
+          child: InkWell(
+            onTap: widget.clickClose,
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Text(
+                widget.textClose,
+                style: widget.textStyleClose,
               ),
             ),
           ),

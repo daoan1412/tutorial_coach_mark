@@ -91,7 +91,7 @@ class TutorialCoachMark {
 
   void skip(TargetFocus currentTargetFocus) {
     if (onClickSkip != null) onClickSkip(currentTargetFocus);
-    next();
+    _widgetKey?.currentState?.skip();
   }
 
   void close() {

@@ -132,6 +132,14 @@ class AnimatedFocusLightState extends State<AnimatedFocusLight>
   void next() => _tapHandler();
   void previous() => _tapHandler(goNext: false);
 
+  void skip() {
+    setState(() {
+      _goNext = true;
+      _initReverse = true;
+    });
+    _controllerPulse.reverse(from: _controllerPulse.value);
+  }
+
   void _tapHandler({bool goNext = true}) {
     setState(() {
       _goNext = goNext;

@@ -249,5 +249,6 @@ class TutorialCoachMarkWidgetState extends State<TutorialCoachMarkWidget> {
   }
 
   void next() => _focusLightKey?.currentState?.next();
+  void skip() => _focusLightKey?.currentState?.skip();
   void previous() => _focusLightKey?.currentState?.previous();
 }
